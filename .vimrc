@@ -39,8 +39,8 @@ set listchars=tab:>·
 " Use \ as local leader, for LaTeX (HALP)
 let maplocalleader='\'
 
-" Map Ctrl+N to :noh (:nohlsearch)
-nnoremap <C-n> :noh<CR>
+" Map Ctrl+H to :noh (:nohlsearch)
+nnoremap <C-h> :noh<CR>
 
 "" PLUGINS
 call plug#begin()
@@ -101,10 +101,15 @@ let g:syntastic_scss_checkers = ['scss_lint']
 let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
 
 "" NERDTREE - file browser in sidebar
-" Enter NERDTree on start
-autocmd VimEnter * :NERDTree
+" Enter NERDTree on start if no argument
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" Close if the only window left is NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " Ignore pyc files
 let NERDTreeIgnore = ['\.pyc$']
+" Toggle NERDTree with Ctrl+N
+map <C-n> :NERDTreeToggle<CR>
 
 
 "" LANGUAGE-SPECIFIC
