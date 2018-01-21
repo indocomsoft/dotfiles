@@ -59,7 +59,10 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/syntastic'
 " File browser in sidebar
 Plug 'scrooloose/nerdtree'
-
+" Code formatter
+Plug 'google/vim-codefmt'
+Plug 'google/vim-maktaba'
+Plug 'google/vim-glaive'
 
 " LaTeX
 Plug 'lervag/vimtex'
