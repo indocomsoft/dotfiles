@@ -114,6 +114,17 @@ let NERDTreeIgnore = ['\.pyc$']
 " Toggle NERDTree with Ctrl+N
 map <C-n> :NERDTreeToggle<CR>
 
+"" Code Formatter
+call glaive#Install()
+" Enable codefmt's default mappings on the <Leader>= prefix.
+Glaive codefmt plugin[mappings]
+" google-java-format location
+Glaive codefmt google_java_executable="java -jar /home/julius/.config/nvim/google-java-format-1.6-SNAPSHOT-all-deps-disable-one-line.jar"
+" Automatically format codes
+augroup autoformat_settings
+  autocmd FileType java AutoFormatBuffer google-java-format
+  autocmd FileType python AutoFormatBuffer yapf
+augroup END
 
 "" LANGUAGE-SPECIFIC
 
