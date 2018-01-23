@@ -1,6 +1,21 @@
-# For Windows Subsystem for Linux
-# Comment out when using on non-Windows
-export DISPLAY=:0.0
+BASE16_SHELL=$HOME/.config/base16-shell/
+[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+
+
+PATH="$PATH:~/.prefix/bin"
+
+alias v=nvim
+alias w="cd /media/julius/JULIUS256GB/indocomsoft@gmail.com/\!NUS-CS/CurrentSem/"
+alias f="/media/julius/JULIUS256GB/indocomsoft@gmail.com/\!NUS-CS/CurrentSem/ivle-sync.py f"
+ww="/media/julius/JULIUS256GB/indocomsoft@gmail.com/!NUS-CS/CurrentSem/"
+alias w3="cd /media/julius/JULIUS256GB/indocomsoft@gmail.com/\!NUS-CS/CurrentSem/CS2030/"
+alias w4="cd /media/julius/JULIUS256GB/indocomsoft@gmail.com/\!NUS-CS/CurrentSem/CS2040/"
+alias w1="cd /media/julius/JULIUS256GB/indocomsoft@gmail.com/\!NUS-CS/CurrentSem/CS2100/"
+
+alias s="ssh sunfire.comp.nus.edu.sg"
+alias i="ssh root@indocomsoft.com"
+alias 3="ssh cs2030-i.comp.nus.edu.sg"
+alias c="ssh sadm@cp3108-8-i.comp.nus.edu.sg"
 
 
 export PROMPT_COMMAND=set_prompt
@@ -25,8 +40,6 @@ shopt -s histappend
 HISTSIZE=5000
 HISTFILESIZE=10000
 
-
-
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -45,8 +58,8 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-#HISTSIZE=1000
-#HISTFILESIZE=2000
+HISTSIZE=1000
+HISTFILESIZE=2000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -66,7 +79,7 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
+    xterm|xterm-color|*-256color) color_prompt=yes;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -86,16 +99,20 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    if [[ ${EUID} == 0 ]] ; then
+        PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\h\[\033[01;34m\] \W \$\[\033[00m\] '
+    else
+        PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[01;34m\]\w \$\[\033[00m\] '
+    fi
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h \w \$ '
 fi
 unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h \w\a\]$PS1"
     ;;
 *)
     ;;
@@ -145,5 +162,17 @@ if ! shopt -oq posix; then
   fi
 fi
 
+if [ -x /usr/bin/mint-fortune ]; then
+     /usr/bin/mint-fortune
+fi
+
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+. $HOME/.asdf/asdf.sh
+
+. $HOME/.asdf/completions/asdf.bash
