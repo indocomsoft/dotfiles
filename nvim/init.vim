@@ -63,7 +63,10 @@ Plug 'scrooloose/nerdtree'
 Plug 'google/vim-codefmt'
 Plug 'google/vim-maktaba'
 Plug 'google/vim-glaive'
-
+" Tags
+Plug 'xolox/vim-easytags'
+Plug 'xolox/vim-misc'
+Plug 'vim-scripts/taglist.vim'
 " LaTeX
 Plug 'lervag/vimtex'
 " Rails stuff
@@ -113,6 +116,10 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 let NERDTreeIgnore = ['\.pyc$']
 " Toggle NERDTree with Ctrl+N
 map <C-n> :NERDTreeToggle<CR>
+
+"" Taglist
+nnoremap <C-t> :TlistToggle<CR>
+let Tlist_Use_Right_Window = 1
 
 "" Code Formatter
 call glaive#Install()
