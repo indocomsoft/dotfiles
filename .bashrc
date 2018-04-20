@@ -4,19 +4,30 @@ BASE16_SHELL=$HOME/.config/base16-shell/
 
 PATH="$PATH:~/.prefix/bin"
 
+alias gd="cd /media/julius/JULIUS256GB/indocomsoft@gmail.com/"
+
 alias v=nvim
 alias w="cd /media/julius/JULIUS256GB/indocomsoft@gmail.com/\!NUS-CS/CurrentSem/"
-alias f="/media/julius/JULIUS256GB/indocomsoft@gmail.com/\!NUS-CS/CurrentSem/ivle-sync.py f"
 ww="/media/julius/JULIUS256GB/indocomsoft@gmail.com/!NUS-CS/CurrentSem/"
+alias f="cd $ww; /media/julius/JULIUS256GB/indocomsoft@gmail.com/\!NUS-CS/CurrentSem/ivle-sync.py f"
+alias f1="cd $ww/CS2100/website/;./update"
 alias w3="cd /media/julius/JULIUS256GB/indocomsoft@gmail.com/\!NUS-CS/CurrentSem/CS2030/"
+alias w3l="cd /media/julius/JULIUS256GB/indocomsoft@gmail.com/\!NUS-CS/CurrentSem/CS2030/Labs/"
 alias w4="cd /media/julius/JULIUS256GB/indocomsoft@gmail.com/\!NUS-CS/CurrentSem/CS2040/"
+alias w4l="cd /media/julius/JULIUS256GB/indocomsoft@gmail.com/\!NUS-CS/CurrentSem/CS2040/Lab\ Materials/Take-Home\ Labs"
 alias w1="cd /media/julius/JULIUS256GB/indocomsoft@gmail.com/\!NUS-CS/CurrentSem/CS2100/"
+alias w1l="cd /media/julius/JULIUS256GB/indocomsoft@gmail.com/\!NUS-CS/CurrentSem/CS2100/Labs"
 
 alias s="ssh sunfire.comp.nus.edu.sg"
-alias i="ssh root@indocomsoft.com"
-alias 3="ssh cs2030-i.comp.nus.edu.sg"
+alias i="ssh root@new.indocomsoft.com"
+alias 3="ssh 172.25.76.40"
 alias c="ssh sadm@cp3108-8-i.comp.nus.edu.sg"
+alias sa="ssh sadm@sourceacademy-i.comp.nus.edu.sg"
+alias x="ssh -p8888 new.indocomsoft.com"
+alias o="ssh odroid@172.27.211.120"
+alias or="ssh -p9999 odroid@new.indocomsoft.com"
 
+alias id="mix archive.install github jeremyjh/dialyxir"
 
 export PROMPT_COMMAND=set_prompt
 set_prompt() {
@@ -176,3 +187,5 @@ export NVM_DIR="$HOME/.nvm"
 . $HOME/.asdf/asdf.sh
 
 . $HOME/.asdf/completions/asdf.bash
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
