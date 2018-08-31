@@ -87,6 +87,8 @@ Plug 'leafgarland/typescript-vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 let g:deoplete#enable_at_startup = 1
 
+Plug 'slashmili/alchemist.vim'
+
 call plug#end()
 "" vim-airline
 let g:airline_powerline_fonts = 1

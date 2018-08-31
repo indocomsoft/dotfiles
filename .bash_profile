@@ -9,13 +9,20 @@ alias 3="ssh 172.25.76.40"
 alias c="ssh sadm@cp3108-8-i.comp.nus.edu.sg"
 alias sa="ssh sadm@sourceacademy-i.comp.nus.edu.sg"
 alias x="ssh -p8888 new.indocomsoft.com"
-alias o="ssh odroid@172.27.211.120"
-alias or="ssh -p9999 odroid@new.indocomsoft.com"
+alias o="ssh odroid@192.168.1.105"
+alias or="ssh -p9999 new.indocomsoft.com"
 
 alias id="mix archive.install github jeremyjh/dialyxir"
 
+alias sas="ssh bitnami@13.229.233.29"
+alias sasf="echo 'sshuttle -r bitnami@ec2a 0.0.0.0/0' | pbcopy"
+alias sap="ssh bitnami@13.229.136.151 -p1819"
+alias sapf="echo 'sshuttle -r bitnami@ec2a 0/0:5432' | pbcopy"
+
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
+
+alias ls="ls -G"
 
 export PROMPT_COMMAND="set_prompt; $PROMPT_COMMAND"
 set_prompt() {
@@ -55,3 +62,6 @@ export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 export GPG_TTY=$(tty)
+export PATH="/usr/local/opt/mongodb@3.4/bin:$PATH"
+
+export PATH="$HOME/.cargo/bin:$PATH"
