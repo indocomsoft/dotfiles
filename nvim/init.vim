@@ -146,10 +146,12 @@ call glaive#Install()
 Glaive codefmt plugin[mappings]
 " google-java-format location
 Glaive codefmt google_java_executable="java -jar /home/julius/.config/nvim/google-java-format-1.6-SNAPSHOT-all-deps-disable-one-line.jar --skip-removing-unused-imports"
+Glaive codefmt clang_format_style="webkit"
 " Automatically format codes
 augroup autoformat_settings
   autocmd FileType java AutoFormatBuffer google-java-format
   autocmd FileType python AutoFormatBuffer yapf
+  autocmd FileType c,cpp AutoFormatBuffer clang-format
 augroup END
 
 "" LANGUAGE-SPECIFIC
@@ -157,6 +159,8 @@ augroup END
 " Javascript: Allow JSX in normal JS files and use 4 spaces
 let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
 " autocmd FileType javascript setlocal shiftwidth=4 tabstop=4
+
+autocmd FileType c setlocal shiftwidth=4 tabstop=4
 
 " LaTeX: default latexmk options for vimtex
 let g:vimtex_latexmk_options = '-pdf -shell-escape -verbose -file-line-error -synctex=1 -interaction=nonstopmode'
