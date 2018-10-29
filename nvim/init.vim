@@ -9,6 +9,9 @@ set shiftwidth=2
 " Expand tabs into spaces
 set expandtab
 
+" Autoread
+set autoread
+
 " Highlight searches
 set hlsearch
 
@@ -86,6 +89,8 @@ Plug 'leafgarland/typescript-vim'
 " Plug 'mhartington/nvim-typescript', { 'do': './install.sh' }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 let g:deoplete#enable_at_startup = 1
+" Swift stuffs
+Plug 'keith/swift.vim'
 
 Plug 'slashmili/alchemist.vim'
 
@@ -160,10 +165,17 @@ augroup END
 let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
 " autocmd FileType javascript setlocal shiftwidth=4 tabstop=4
 
-autocmd FileType c setlocal shiftwidth=4 tabstop=4
+autocmd FileType c,cpp setlocal shiftwidth=4 tabstop=4
+
+autocmd BufWritePost *.rb silent execute '!rubocop -a %' | redraw!
 
 " LaTeX: default latexmk options for vimtex
-let g:vimtex_latexmk_options = '-pdf -shell-escape -verbose -file-line-error -synctex=1 -interaction=nonstopmode'
+"let g:vimtex_latexmk_options = '-pdf -shell-escape -verbose -file-line-error -synctex=1 -interaction=nonstopmode'
+let g:vimtex_compiler_latexmk = {
+\  'options': ['-verbose', '-file-line-error', '-synctex=1', '-interaction=nonstopmode', '-shell-escape'],
+\  'continuous': 1
+\}
+let g:vimtex_compiler_progname = 'nvr'
 
 " Python: don't use PEP8 recommendation of 4 spaces
 let g:python_recommended_style = 0
@@ -187,3 +199,7 @@ tnoremap <esc> <C-\><C-n>
 
 " No number in terminal
 au TermOpen * setlocal nonumber norelativenumber
+
+" Treat long lines as break lines
+map j gj
+map k gk
