@@ -67,17 +67,18 @@ Plug 'google/vim-codefmt'
 Plug 'google/vim-maktaba'
 Plug 'google/vim-glaive'
 " Tags
-Plug 'xolox/vim-easytags'
-Plug 'xolox/vim-misc'
-Plug 'vim-scripts/taglist.vim'
+" Plug 'xolox/vim-easytags'
+" Plug 'xolox/vim-misc'
+" Plug 'indocomsoft/taglist.vim'
+Plug 'majutsushi/tagbar'
 " LaTeX
-Plug 'lervag/vimtex'
+" Plug 'lervag/vimtex'
 " Rails stuff
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-bundler'
 " Javascript stuff
 Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
+" Plug 'mxw/vim-jsx'
 " Elixir stuff
 Plug 'elixir-editors/vim-elixir'
 " Prettier
@@ -93,6 +94,14 @@ let g:deoplete#enable_at_startup = 1
 Plug 'keith/swift.vim'
 
 Plug 'slashmili/alchemist.vim'
+
+Plug 'wlangstroth/vim-racket'
+
+Plug 'neovimhaskell/haskell-vim'
+
+Plug 'rust-lang/rust.vim'
+
+Plug 'indocomsoft/vim-x10'
 
 call plug#end()
 "" vim-airline
@@ -142,10 +151,11 @@ let NERDTreeIgnore = ['\.pyc$']
 map <C-n> :NERDTreeToggle<CR>
 
 "" Taglist
-nnoremap <C-t> :TlistToggle<CR>:TlistUpdate<CR>
-let Tlist_Use_Right_Window = 1
+" nnoremap <C-t> :TlistToggle<CR>:TlistUpdate<CR>
+" let Tlist_Use_Right_Window = 1
+nnoremap tt :TagbarToggle<CR>
 
-"" Code Formatter
+" Code Formatter
 call glaive#Install()
 " Enable codefmt's default mappings on the <Leader>= prefix.
 Glaive codefmt plugin[mappings]
@@ -156,7 +166,7 @@ Glaive codefmt clang_format_style="webkit"
 augroup autoformat_settings
   autocmd FileType java AutoFormatBuffer google-java-format
   autocmd FileType python AutoFormatBuffer yapf
-  autocmd FileType c,cpp AutoFormatBuffer clang-format
+  autocmd FileType c,cpp,cuda AutoFormatBuffer clang-format
 augroup END
 
 "" LANGUAGE-SPECIFIC
@@ -165,20 +175,20 @@ augroup END
 let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
 " autocmd FileType javascript setlocal shiftwidth=4 tabstop=4
 
-autocmd FileType c,cpp setlocal shiftwidth=4 tabstop=4
+autocmd FileType c,cpp,cuda setlocal shiftwidth=4 tabstop=4
 
 autocmd BufWritePost *.rb silent execute '!rubocop -a %' | redraw!
 
 " LaTeX: default latexmk options for vimtex
 "let g:vimtex_latexmk_options = '-pdf -shell-escape -verbose -file-line-error -synctex=1 -interaction=nonstopmode'
-let g:vimtex_compiler_latexmk = {
-\  'options': ['-verbose', '-file-line-error', '-synctex=1', '-interaction=nonstopmode', '-shell-escape'],
-\  'continuous': 1
-\}
-let g:vimtex_compiler_progname = 'nvr'
+" let g:vimtex_compiler_latexmk = {
+" \  'options': ['-verbose', '-file-line-error', '-synctex=1', '-interaction=nonstopmode', '-shell-escape'],
+" \  'continuous': 1
+" \}
+" let g:vimtex_compiler_progname = 'nvr'
 
 " Python: don't use PEP8 recommendation of 4 spaces
-let g:python_recommended_style = 0
+" let g:python_recommended_style = 0
 
 " Swift: use 4 spaces
 autocmd FileType swift setlocal shiftwidth=4 tabstop=4
@@ -192,6 +202,8 @@ autocmd BufEnter *.tsx set filetype=typescript.tsx
 autocmd Filetype java set makeprg=javac\ %:S
 set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
 
+nmap <C-g> <Plug>(grammarous-open-info-window)
+
 
 "" NEOVIM
 " Escape terminal
@@ -203,3 +215,38 @@ au TermOpen * setlocal nonumber norelativenumber
 " Treat long lines as break lines
 map j gj
 map k gk
+
+"" Tags for unsupported languages
+" Elixir
+let g:tagbar_type_elixir = {
+    \ 'ctagstype' : 'elixir',
+    \ 'kinds' : [
+        \ 'f:functions',
+        \ 'functions:functions',
+        \ 'c:callbacks',
+        \ 'd:delegates',
+        \ 'e:exceptions',
+        \ 'i:implementations',
+        \ 'a:macros',
+        \ 'o:operators',
+        \ 'm:modules',
+        \ 'p:protocols',
+        \ 'r:records',
+        \ 't:tests'
+    \ ]
+\ }
+
+" Rust
+let g:tagbar_type_rust = {
+   \ 'ctagstype' : 'rust',
+   \ 'kinds' : [
+       \'T:types,type definitions',
+       \'f:functions,function definitions',
+       \'g:enum,enumeration names',
+       \'s:structure names',
+       \'m:modules,module names',
+       \'c:consts,static constants',
+       \'t:traits',
+       \'i:impls,trait implementations',
+   \]
+   \}
