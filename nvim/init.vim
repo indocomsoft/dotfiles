@@ -11,12 +11,25 @@ set expandtab
 
 " Autoread
 set autoread
+" Triger `autoread` when files changes on disk
+" https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
+" https://vi.stackexchange.com/questions/13692/prevent-focusgained-autocmd-running-in-command-line-editing-mode
+autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
+" Notification after file change
+" https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
+autocmd FileChangedShellPost *
+  \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
 " Highlight searches
 set hlsearch
 
 " Add line marker at 81th character
 set cc=81
+autocmd FileType elixir set cc=121
+
+" Use , as local leader
+let maplocalleader=','
+
 
 " Show line numbers
 set number
@@ -38,9 +51,6 @@ set pastetoggle=<F3>
 
 " On `:set list` show tab with >·
 set list listchars=tab:\|\ ,trail:·
-
-" Use \ as local leader, for LaTeX (HALP)
-let maplocalleader='\'
 
 " Map Ctrl+H to :noh (:nohlsearch)
 nnoremap <C-h> :noh<CR>
@@ -72,7 +82,8 @@ Plug 'google/vim-glaive'
 " Plug 'indocomsoft/taglist.vim'
 Plug 'majutsushi/tagbar'
 " LaTeX
-" Plug 'lervag/vimtex'
+Plug 'lervag/vimtex'
+Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'}
 " Rails stuff
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-bundler'
@@ -81,6 +92,7 @@ Plug 'pangloss/vim-javascript'
 " Plug 'mxw/vim-jsx'
 " Elixir stuff
 Plug 'elixir-editors/vim-elixir'
+Plug 'mhinz/vim-mix-format'
 " Prettier
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 " Typescript stuff
@@ -102,6 +114,7 @@ Plug 'neovimhaskell/haskell-vim'
 Plug 'rust-lang/rust.vim'
 
 Plug 'indocomsoft/vim-x10'
+
 
 call plug#end()
 "" vim-airline
@@ -177,15 +190,22 @@ let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
 
 autocmd FileType c,cpp,cuda setlocal shiftwidth=4 tabstop=4
 
-autocmd BufWritePost *.rb silent execute '!rubocop -a %' | redraw!
+autocmd BufWritePost *.rb silent execute '!rubocop -a "%:p"' | edit!
+
 
 " LaTeX: default latexmk options for vimtex
-"let g:vimtex_latexmk_options = '-pdf -shell-escape -verbose -file-line-error -synctex=1 -interaction=nonstopmode'
-" let g:vimtex_compiler_latexmk = {
-" \  'options': ['-verbose', '-file-line-error', '-synctex=1', '-interaction=nonstopmode', '-shell-escape'],
-" \  'continuous': 1
-" \}
-" let g:vimtex_compiler_progname = 'nvr'
+let g:vimtex_compiler_progname = 'nvr'
+let g:vimtex_view_method = 'skim'
+let g:vimtex_quickfix_latexlog = {'default' : 0}
+autocmd FileType tex inoremap <C-t> \texttt{}<ESC>i
+autocmd FileType tex inoremap <C-b> \textbf{}<ESC>i
+autocmd FileType tex inoremap <C-v> \mintinline{}{}<ESC>2hi
+autocmd FileType tex inoremap <C-x> \begin{itemize}<CR>\item <CR>\end{itemize}<ESC>kA
+
+autocmd BufWritePost *.tex silent execute '!latexindent -w -s -c="$HOME/.vimtmp/" "%:p"' | edit!
+
+set conceallevel=2
+let g:tex_conceal='abdmg'
 
 " Python: don't use PEP8 recommendation of 4 spaces
 " let g:python_recommended_style = 0
@@ -215,6 +235,9 @@ au TermOpen * setlocal nonumber norelativenumber
 " Treat long lines as break lines
 map j gj
 map k gk
+
+" Auto mix format
+let g:mix_format_on_save = 1
 
 "" Tags for unsupported languages
 " Elixir
