@@ -25,7 +25,7 @@ set hlsearch
 
 " Add line marker at 81th character
 set cc=81
-autocmd FileType elixir set cc=121
+autocmd FileType elixir set cc=101
 
 " Use , as local leader
 let maplocalleader=','
@@ -93,6 +93,7 @@ Plug 'pangloss/vim-javascript'
 " Elixir stuff
 Plug 'elixir-editors/vim-elixir'
 Plug 'mhinz/vim-mix-format'
+Plug 'slashmili/alchemist.vim'
 " Prettier
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 " Typescript stuff
@@ -105,15 +106,20 @@ let g:deoplete#enable_at_startup = 1
 " Swift stuffs
 Plug 'keith/swift.vim'
 
-Plug 'slashmili/alchemist.vim'
-
+" Racket
 Plug 'wlangstroth/vim-racket'
 
+" Haskell
 Plug 'neovimhaskell/haskell-vim'
 
+" Rust
 Plug 'rust-lang/rust.vim'
 
+" X10
 Plug 'indocomsoft/vim-x10'
+
+" Python
+Plug 'python-mode/python-mode', { 'branch': 'develop' }
 
 
 call plug#end()
@@ -173,7 +179,7 @@ call glaive#Install()
 " Enable codefmt's default mappings on the <Leader>= prefix.
 Glaive codefmt plugin[mappings]
 " google-java-format location
-Glaive codefmt google_java_executable="java -jar /home/julius/.config/nvim/google-java-format-1.6-SNAPSHOT-all-deps-disable-one-line.jar --skip-removing-unused-imports"
+Glaive codefmt google_java_executable="java -jar /Users/julius/.config/nvim/google-java-format-1.6-SNAPSHOT-all-deps-disable-one-line.jar --skip-removing-unused-imports"
 Glaive codefmt clang_format_style="webkit"
 " Automatically format codes
 augroup autoformat_settings
@@ -209,6 +215,10 @@ let g:tex_conceal='abdmg'
 
 " Python: don't use PEP8 recommendation of 4 spaces
 " let g:python_recommended_style = 0
+" Use python2
+" let g:pymode_python = 'python'
+" Use python3
+let g:pymode_python = 'python3'
 
 " Swift: use 4 spaces
 autocmd FileType swift setlocal shiftwidth=4 tabstop=4
