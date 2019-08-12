@@ -1,0 +1,4 @@
+defaultIndent: "  "
+removeTrailingWhitespace:
+    beforeProcessing: 0
+    afterProcessing: 1
