@@ -121,6 +121,8 @@ Plug 'indocomsoft/vim-x10'
 " Python
 Plug 'python-mode/python-mode', { 'branch': 'develop' }
 
+" ALE
+Plug 'dense-analysis/ale'
 
 call plug#end()
 "" vim-airline
@@ -207,11 +209,13 @@ autocmd FileType tex inoremap <C-t> \texttt{}<ESC>i
 autocmd FileType tex inoremap <C-b> \textbf{}<ESC>i
 autocmd FileType tex inoremap <C-v> \mintinline{}{}<ESC>2hi
 autocmd FileType tex inoremap <C-x> \begin{itemize}<CR>\item <CR>\end{itemize}<ESC>kA
+autocmd FileType tex inoremap <C-s> \begin{minted}{}<ESC>i
+autocmd FileType tex inoremap <C-f> \begin{frame}{}<CR>\end{frame}<ESC>k$i
 
-autocmd BufWritePost *.tex silent execute '!latexindent -w -s -c="$HOME/.vimtmp/" "%:p"' | edit!
+"autocmd BufWritePost *.tex silent execute '!latexindent -w -s -c="$HOME/.vimtmp/" "%:p"' | edit!
 
-set conceallevel=2
-let g:tex_conceal='abdmg'
+autocmd FileType tex set conceallevel=2
+autocmd FileType tex let g:tex_conceal='abdmg'
 
 " Python: don't use PEP8 recommendation of 4 spaces
 " let g:python_recommended_style = 0
@@ -219,6 +223,8 @@ let g:tex_conceal='abdmg'
 " let g:pymode_python = 'python'
 " Use python3
 let g:pymode_python = 'python3'
+
+autocmd FileType python set wrap
 
 " Swift: use 4 spaces
 autocmd FileType swift setlocal shiftwidth=4 tabstop=4
@@ -234,8 +240,26 @@ set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
 
 nmap <C-g> <Plug>(grammarous-open-info-window)
 
+" ALE
 
-"" NEOVIM
+nmap <silent> <leader>aj <Plug>(ale_previous_wrap)
+nmap <silent> <leader>ak <Plug>(ale_next_wrap)
+
+let g:ale_fix_on_save = 1
+let g:ale_linters = {
+\   'tex': [],
+\}
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'haskell': ['brittany'],
+\   'tex': ['latexindent'],
+\}
+
+call deoplete#custom#option('sources', {
+\ '_': ['ale'],
+\})
+
+" NEOVIM
 " Escape terminal
 tnoremap <esc> <C-\><C-n>
 
