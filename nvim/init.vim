@@ -124,6 +124,16 @@ Plug 'python-mode/python-mode', { 'branch': 'develop' }
 " ALE
 Plug 'dense-analysis/ale'
 
+" Nginx
+Plug 'chr4/nginx.vim'
+
+" fzf
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+"plantuml
+Plug 'aklt/plantuml-syntax'
+
 call plug#end()
 "" vim-airline
 let g:airline_powerline_fonts = 1
@@ -186,7 +196,7 @@ Glaive codefmt clang_format_style="webkit"
 " Automatically format codes
 augroup autoformat_settings
   autocmd FileType java AutoFormatBuffer google-java-format
-  autocmd FileType python AutoFormatBuffer yapf
+  "autocmd FileType python AutoFormatBuffer yapf
   autocmd FileType c,cpp,cuda AutoFormatBuffer clang-format
 augroup END
 
@@ -220,9 +230,9 @@ autocmd FileType tex let g:tex_conceal='abdmg'
 " Python: don't use PEP8 recommendation of 4 spaces
 " let g:python_recommended_style = 0
 " Use python2
-" let g:pymode_python = 'python'
+let g:pymode_python = 'python'
 " Use python3
-let g:pymode_python = 'python3'
+" let g:pymode_python = 'python3'
 
 autocmd FileType python set wrap
 
@@ -245,15 +255,37 @@ nmap <C-g> <Plug>(grammarous-open-info-window)
 nmap <silent> <localleader>aj <Plug>(ale_previous_wrap)
 nmap <silent> <localleader>ak <Plug>(ale_next_wrap)
 
+highlight clear ALEErrorSign
+highlight clear ALEWarningSign
+
+hi clear SpellBad
+hi SpellBad cterm=underline
+hi clear SpellCap
+hi SpellCap cterm=underline
+
+let g:ale_sign_error = '❌'
+let g:ale_sign_warning = '⚠️'
+
 let g:ale_fix_on_save = 1
 let g:ale_linters = {
+\   'elixir': ['elixir-ls', 'credo'],
+\   'python': ['flake8', 'mypy'],
 \   'tex': [],
 \}
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'elixir': [],
 \   'haskell': ['brittany'],
 \   'tex': ['latexindent'],
 \}
+
+let g:ale_elixir_elixir_ls_release = '/Users/julius/GitHub/elixir-ls/rel'
+let g:ale_elixir_elixir_ls_config = {
+\  'elixirLS': {
+\    'dialyzerEnabled': v:false,
+\  }
+\}
+let g:ale_set_balloons = 1
 
 call deoplete#custom#option('sources', {
 \ '_': ['ale'],
@@ -307,3 +339,12 @@ let g:tagbar_type_rust = {
        \'i:impls,trait implementations',
    \]
    \}
+
+" Load all plugins now.
+" Plugins need to be added to runtimepath before helptags can be generated.
+packloadall
+" Load all of the helptags now, after plugins have been loaded.
+" All messages and errors will be ignored.
+silent! helptags ALL
+
+nmap ff :FZF<CR>
