@@ -1,0 +1,15 @@
+#/bin/bash
+
+export BORG_PASSPHRASE="anu123"
+export BORG_CHECK_I_KNOW_WHAT_I_AM_DOING="YES"
+
+# export REPO="ssh://172.16.56.11/JULIUS4TB/OLDRAID/BU/borg/SP4"
+export REPO="ssh://192.168.0.102/JULIUS4TB/OLDRAID/BU/borg/SP4"
+# export REPO="/Volumes/JULIUS4TB/RAID1/BU/borg/SP4"
+
+borg create -vps --compression auto,lz4 --exclude '*/blueline' --exclude '*/.cocoapods' --exclude '*/.cache' --exclude '*/Parallels' --exclude '*/Docker.raw' --exclude '*/Application Support' --exclude '*/CacheStorage' --exclude '*/Caches' --exclude '*/Cache' --exclude '*/indocomsoft@gmail.com' --exclude '*/steamapps' --exclude '*.noindex' --exclude '*/Library' --exclude '*/Movies' "$REPO"::MBP-$(date +"%Y%m%d-%H%M") ~/
+borg create -vps --compression auto,lz4 "$REPO"::J256-$(date +"%Y%m%d-%H%M") /Volumes/JULIUS256GB/
+borg prune -d 7 -w 4 -m 12 -P MBP -vs --list  "$REPO"
+borg prune -d 7 -w 4 -m 12 -P J256 -vs --list  "$REPO"
+borg check --repair -vp "$REPO"
+# borg compact --cleanup-commits "$REPO"

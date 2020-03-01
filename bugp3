@@ -1,0 +1,8 @@
+#!/bin/bash
+if [[ -z $1 ]]
+then
+  echo Usage: "$0" \<ip address\>
+  exit 1
+fi
+
+rsync -Pavvh -e "ssh -p8022" "$1":~/storage/shared/ /Volumes/JULIUS256GB/BUGP3/ --no-i-r --delete-after --exclude 'cache' --exclude 'spotifycache' --delete-excluded --modify-window=2
